@@ -1,0 +1,10 @@
+bin/*
+src/fuzzsmt.jar
+src/build.xml
+src/fuzzsmt
+.settings/*
+.project
+.classpath
+*.class
+*.swp
+z3/
