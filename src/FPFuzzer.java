@@ -153,43 +153,67 @@ public class FPFuzzer
 		System.out.println("; DERIVE FLOATS");
 		StringBuilder builder = new StringBuilder();
 
-		// TODO use functions as well as ops
 		for(int i=0; i < numDerivedFloats; i++){
 			// Pick random rounding mode
 			FPRoundMode[] rModes = FPRoundMode.values();
 			FPRoundMode rMode = rModes[(r.nextInt(rModes.length))];
-			Object[] ops = EnumSet.range(FPOps.ABS, FPOps.PLUS).toArray();
 
 			String name = "?float" + SMTNode.getNodeCtr();
 
-			// Pick random operation that outputs float
-			FPOps op = (FPOps)ops[r.nextInt(ops.length)];
+      if (r.nextBoolean()) {
+        int idx = r.nextInt(funcNodes.size());
+        FuncType node = (FuncType)funcNodes.get(idx).getType();
+        Signature sig = node.getSignature();
+        List<SMTType> ops = sig.getOperandTypes();
+        SMTType resultType = sig.getResultType();
 
-			ArrayList<SMTNode> args = new ArrayList<SMTNode>();
-			for(int argc=0; argc < op.arity; argc++){
-				args.add(floatNodes.get(r.nextInt(floatNodes.size())));
-			}
+        builder.append("(declare-const " + name + " Float" + ((FloatType)resultType).bits + ")\n");
+        builder.append("(assert (= " + name + " " + "(" + node.toString() + " "); 
 
-			// Randomly pick an arg and use its bitwidth
-			int idx = r.nextInt(args.size());
-			int bw = ((FloatType)args.get(idx).type).bits;
+        for (int argc=0; argc < ops.size(); argc++){
+          SMTNode randNode = floatNodes.get(r.nextInt(floatNodes.size()));
+          FloatType currNode = (FloatType)ops.get(argc);
+          int bw = currNode.bits;
+          builder.append(adaptBW(randNode, bw, r) + " ");
+        }
 
-			builder.append("(declare-const " + name + " Float" + bw + ")\n");
-			builder.append("(assert (= " + name + " " + "(" + op.str + " "); 
+        builder.deleteCharAt(builder.toString().length()-1);
+        builder.append(")))\n");
 
-			if(op.doRound){
-				builder.append(rMode + " ");
-			}
+        SMTNode derived = new SMTNode(new FloatType(((FloatType)resultType).bits), name);
+        floatNodes.add(derived);
+      } else {
+        Object[] ops = EnumSet.range(FPOps.ABS, FPOps.MAX).toArray();
 
-			for(SMTNode arg: args){
-				builder.append(adaptBW(arg, bw, r) + " ");
-			}
-			builder.deleteCharAt(builder.toString().length()-1);
+        // Pick random operation that outputs float
+        FPOps op = (FPOps)ops[r.nextInt(ops.length)];
 
-			builder.append(")))\n");
+        ArrayList<SMTNode> args = new ArrayList<SMTNode>();
+        for(int argc=0; argc < op.arity; argc++){
+          args.add(floatNodes.get(r.nextInt(floatNodes.size())));
+        }
 
-			SMTNode derived = new SMTNode(new FloatType(bw), name);		
-			floatNodes.add(derived);
+        // Randomly pick an arg and use its bitwidth
+        int idx = r.nextInt(args.size());
+        int bw = ((FloatType)args.get(idx).type).bits;
+
+        builder.append("(declare-const " + name + " Float" + bw + ")\n");
+        builder.append("(assert (= " + name + " " + "(" + op.str + " "); 
+
+        if(op.doRound){
+          builder.append(rMode + " ");
+        }
+
+        for(SMTNode arg: args){
+          builder.append(adaptBW(arg, bw, r) + " ");
+        }
+        builder.deleteCharAt(builder.toString().length()-1);
+
+        builder.append(")))\n");
+
+        SMTNode derived = new SMTNode(new FloatType(bw), name);		
+        floatNodes.add(derived);
+      }
 		}
 		System.out.print(builder.toString());
 	}
@@ -202,43 +226,66 @@ public class FPFuzzer
 			// Pick random rounding mode
 			FPRoundMode[] rModes = FPRoundMode.values();
 			FPRoundMode rMode = rModes[(r.nextInt(rModes.length))];
-			Object[] ops = EnumSet.range(FPOps.LEQ, FPOps.GT).toArray();
 
 			String name = "?bool" + SMTNode.getNodeCtr();
 
-			// Pick random operation that outputs boolean
-			// TODO Use predicates as well
-			FPOps op = (FPOps)ops[r.nextInt(ops.length)];
-			ArrayList<SMTNode> args = new ArrayList<SMTNode>();
-			for(int argc=0; argc < op.arity; argc++){
-				args.add(floatNodes.get(r.nextInt(floatNodes.size())));
-			}
+      if (r.nextBoolean()) {
+        int idx = r.nextInt(predNodes.size());
+        FuncType node = (FuncType)predNodes.get(idx).getType();
+        Signature sig = node.getSignature();
+        List<SMTType> ops = sig.getOperandTypes();
 
-			// Randomly pick an arg and use its bitwidth
-			int idx = r.nextInt(args.size());
-			int bw = ((FloatType)args.get(idx).type).bits;
+        builder.append("(declare-const " + name + " Bool)\n");
+        builder.append("(assert (= " + name + " " + "(" + node.toString() + " "); 
 
-			builder.append("(declare-const " + name + " Bool)\n");
-			builder.append("(assert (= " + name + " " + "(" + op.str + " ");
+        for (int argc=0; argc < ops.size(); argc++){
+          SMTNode randNode = floatNodes.get(r.nextInt(floatNodes.size()));
+          FloatType currNode = (FloatType)ops.get(argc);
+          int bw = currNode.bits;
+          builder.append(adaptBW(randNode, bw, r) + " ");
+        }
 
-			if(op.doRound){
-				builder.append(rMode + " ");
-			}
+        builder.deleteCharAt(builder.toString().length()-1);
+        builder.append(")))\n");
 
-			for(SMTNode arg: args){		
-				builder.append(adaptBW(arg, bw, r) + " ");
-			}
-			builder.deleteCharAt(builder.toString().length()-1);
+        SMTNode derived = new SMTNode(BoolType.boolType, name);
+        boolNodes.add(derived);
+      } else {
+        Object[] ops = EnumSet.range(FPOps.LEQ, FPOps.ISPOSITIVE).toArray();
 
-			builder.append(")))\n");
+        // Pick random operation that outputs boolean
+        FPOps op = (FPOps)ops[r.nextInt(ops.length)];
+        ArrayList<SMTNode> args = new ArrayList<SMTNode>();
+        for(int argc=0; argc < op.arity; argc++){
+          args.add(floatNodes.get(r.nextInt(floatNodes.size())));
+        }
 
-			SMTNode derived = new SMTNode(BoolType.boolType, name);
-			boolNodes.add(derived);
+        // Randomly pick an arg and use its bitwidth
+        int idx = r.nextInt(args.size());
+        int bw = ((FloatType)args.get(idx).type).bits;
+
+        builder.append("(declare-const " + name + " Bool)\n");
+        builder.append("(assert (= " + name + " " + "(" + op.str + " ");
+
+        if(op.doRound){
+          builder.append(rMode + " ");
+        }
+
+        for(SMTNode arg: args){		
+          builder.append(adaptBW(arg, bw, r) + " ");
+        }
+        builder.deleteCharAt(builder.toString().length()-1);
+
+        builder.append(")))\n");
+
+        SMTNode derived = new SMTNode(BoolType.boolType, name);
+        boolNodes.add(derived);
+      }
 		}
 		System.out.print(builder.toString());
 	}
 
-	private static void combineBools(BooleanLayerKind blk){
+	private static void combineBools(BooleanLayerKind blk, Random r){
 		System.out.println("; FINAL ASSERT");
 		StringBuilder builder = new StringBuilder();
 		switch(blk){
@@ -254,15 +301,51 @@ public class FPFuzzer
 			builder.append("))");
 			System.out.println(builder.toString());
 			break;
-
-		// TODO other modes
 		case CNF:
+      int clauseCount = r.nextInt(6) + 1;
+      builder.append("(assert (and ");
+      for (int i = 0; i < clauseCount; i++) {
+        int clauseSize = r.nextInt(6) + 1;
+        builder.append("(or ");
+        for (int j = 0; j < clauseSize; j++ ) {
+          int randIdx = r.nextInt(boolNodes.size());
+          builder.append(boolNodes.get(randIdx).name + " ");
+        }
+        builder.deleteCharAt(builder.toString().length()-1);
+        builder.append(") ");
+      }
+      builder.deleteCharAt(builder.toString().length()-1);
+      builder.append("))");
+			System.out.println(builder.toString());
+      break;
 		case RANDOM:
-			// TODO
+      builder.append("(assert ");
+      generateRandomBoolTree(builder, r, 3);
+      builder.deleteCharAt(builder.toString().length()-1);
+      builder.append(")");
+			System.out.println(builder.toString());
 			break;
-
 		}
 	}
+
+  public static void generateRandomBoolTree(StringBuilder builder, Random r,
+    int maxDepth) {
+    String op = (r.nextBoolean()) ? "(and " : "(or ";
+    builder.append(op);
+
+    int clauseSize = r.nextInt(6) + 1;
+    for (int j = 0; j < clauseSize; j++ ) {
+      int randIdx = r.nextInt(boolNodes.size());
+      if (maxDepth > 0 && r.nextBoolean()) {
+        generateRandomBoolTree(builder, r, maxDepth - 1);
+      } else {
+        builder.append(boolNodes.get(randIdx).name + " ");
+      }
+    }
+
+    builder.deleteCharAt(builder.toString().length()-1);
+    builder.append(") ");
+  }
 
 	private enum FPRoundMode {
 		RNE,	// Round nearest ties to even
@@ -293,7 +376,7 @@ public class FPFuzzer
 		short mode = 0b1111;
 		int minArgs = 1;
 		int maxArgs = 3;
-		BooleanLayerKind combineMode = BooleanLayerKind.AND;
+		BooleanLayerKind combineMode = BooleanLayerKind.RANDOM;
 		
 		// TODO Support setting to non-default values via command-line flags
 		// TODO min-ref system?
@@ -303,7 +386,7 @@ public class FPFuzzer
 		generateInputs(numVars, numConsts, mode, r);
 		deriveFloats(numDerivedFloats, r);
 		deriveBools(numDerivedBools, r);
-		combineBools(combineMode);
+		combineBools(combineMode, r);
 		System.out.println("(check-sat)");
 	}
 }
