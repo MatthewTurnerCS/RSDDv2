@@ -19,28 +19,28 @@
 
 public class SMTNode
 {
-  protected static int nodeCtr = 0;
+	protected static int nodeCtr = 0;
 
-  protected SMTType type;
-  protected String name; 
+	protected SMTType type;
+	protected String name; 
 
 
-  public SMTNode (SMTType type, String name){
-    this.type = type;
-    this.name = name;
-    nodeCtr++;
-  }
+	public SMTNode (SMTType type, String name){
+		this.type = type;
+		this.name = name;
+		nodeCtr++;
+	}
 
-  public SMTType getType(){
-    return this.type;
-  }
+	public SMTType getType(){
+		return this.type;
+	}
 
-  public String getName (){
-    return this.name;
-  }
+	public String getName (){
+		return this.name;
+	}
 
-  public static int getNodeCtr (){
-    return nodeCtr;
-  }
+	public static int getNodeCtr (){
+		return nodeCtr;
+	}
 
 }

@@ -27,7 +27,6 @@ public class FloatType extends SMTType {
 	public FloatType(int b) {	  
 		assert(b > 0);
 		this.bits = b;
-		//this.name = "Float[" + b + "]";
 		this.name = "Float" + b;
 	}
 

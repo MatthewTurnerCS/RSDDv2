@@ -19,6 +19,6 @@
 
 public abstract class SMTType {
 
-  public abstract String toString();
+	public abstract String toString();
 
 }

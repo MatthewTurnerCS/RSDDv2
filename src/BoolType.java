@@ -19,12 +19,12 @@
 
 public class BoolType extends SMTType {
 
-  public final static BoolType boolType = new BoolType();
+	public final static BoolType boolType = new BoolType();
 
-  private BoolType() {}
+	private BoolType() {}
 
-  public String toString() {
-    return "bool";
-  }
+	public String toString() {
+		return "bool";
+	}
 
 }

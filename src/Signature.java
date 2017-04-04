@@ -21,23 +21,23 @@ import java.util.*;
 
 public class Signature {
 
-  protected List<SMTType> operandTypes;
+	protected List<SMTType> operandTypes;
 
-  protected SMTType resultType;
+	protected SMTType resultType;
 
-  public Signature (List<SMTType> operandTypes, SMTType resultType){
-    assert (operandTypes != null);
-    assert (resultType != null);
-    this.operandTypes = operandTypes;
-    this.resultType = resultType;
-  }
+	public Signature (List<SMTType> operandTypes, SMTType resultType){
+		assert (operandTypes != null);
+		assert (resultType != null);
+		this.operandTypes = operandTypes;
+		this.resultType = resultType;
+	}
 
-  public List <SMTType> getOperandTypes() {
-    return this.operandTypes;
-  }
+	public List <SMTType> getOperandTypes() {
+		return this.operandTypes;
+	}
 
-  public SMTType getResultType() {
-    return this.resultType;
-  }
+	public SMTType getResultType() {
+		return this.resultType;
+	}
 
 }
