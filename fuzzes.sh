@@ -25,7 +25,7 @@ do
   cat out.smt2 >> logs/fuzzes.log
 
   # run the solvers on the newly generated formulas
-  z3SatAndTime="$(command time bash -c './solvers/z3/bin/z3 -smt2 out.smt2; echo ,' 2>&1 | xargs)"
+  z3SatAndTime="$(command time -p bash -c './solvers/z3/bin/z3 -smt2 out.smt2; echo ,' 2>&1 | xargs)"
   z3Res=$? # process ran successfully (0) or crashed (anything else)
 
   # if there was an error or an inconsistency, log it in errors
