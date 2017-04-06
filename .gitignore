@@ -7,4 +7,5 @@ src/fuzzsmt
 .classpath
 *.class
 *.swp
-z3/
+solvers/
+logs/
