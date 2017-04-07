@@ -13,7 +13,7 @@ echo -e "results when a solver crashed or had inconsistencies\n" > logs/fuzzes_e
 echo -e "iteration,z3-crash,z3-sat,z3-time,mathsat-crash,mathsat-sat,mathsat-time" >> logs/fuzzes_complete.log
 echo -e "iteration,z3-crash,z3-sat,z3-time,mathsat-crash,mathsat-sat,mathsat-time" >> logs/fuzzes_error.log
 
-TIMEOUT=300 # 5 minutes
+TIMEOUT=3600 # 1 hour
 
 # iterate a bunch
 for i in {1..50000}
@@ -28,18 +28,18 @@ do
 
   # run the solvers on the newly generated formulas
   # run z3 to get "sat" or "unsat" with runtime written to file
-  z3Sat="$(command time -p ./solvers/z3/bin/z3 -smt2 -T:$TIMEOUT out.smt2 2>duration.temp)"
+  z3Sat="$(command time -p ./solvers/z3/bin/z3 -smt2 -T:$TIMEOUT out.smt2 2>duration.temp | xargs)"
   z3Time="$(cat duration.temp)"
   rm duration.temp
 
   # run mathsat5 to get "sat" or "unsat" with runtime written to file
   # note: mathsat5 doesn't have a timeout option :(
-  mathsat5Sat="$(command time -p ./solvers/mathsat5/bin/mathsat -input=smt2 out.smt2 2>duration.temp)"
+  mathsat5Sat="$(command time -p ./solvers/mathsat5/bin/mathsat -input=smt2 out.smt2 2>duration.temp | xargs)"
   mathsat5Time="$(cat duration.temp)"
   rm duration.temp
 
   # if there was an error or an inconsistency, log it in errors
-  if ([ "$z3Sat" != "sat" ] && [ "$z3Sat" != "unsat" ]) || ([ "$mathsat5Sat" != "sat" ] && [ "$mathsat53Sat" != "unsat" ]) || [ "$mathsat5Sat" != "$z3Sat" ]; then
+  if ([ "$z3Sat" != "sat" ] && [ "$z3Sat" != "unsat" ]) || ([ "$mathsat5Sat" != "sat" ] && [ "$mathsat5Sat" != "unsat" ]) || [ "$mathsat5Sat" != "$z3Sat" ]; then
     echo -e "$i,$z3Sat,$z3Time,$mathsat5Sat,$mathsat5Time" | xargs >> logs/fuzzes_error.log
   fi
 
