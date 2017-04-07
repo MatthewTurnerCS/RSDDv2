@@ -9,12 +9,14 @@ mkdir -p logs
 # prepare the log files
 echo -e "the generated formulas used by the solvers\n" > logs/fuzzes.log
 echo -e "an overview of the results of each solver\n" > logs/fuzzes_complete.log
-echo -e "results when a solver crashed or inconsistencies\n" > logs/fuzzes_error.log
-echo -e "iteration,z3-crash,z3-sat,z3-time" >> logs/fuzzes_complete.log
-echo -e "iteration,z3-crash,z3-sat,z3-time" >> logs/fuzzes_error.log
+echo -e "results when a solver crashed or had inconsistencies\n" > logs/fuzzes_error.log
+echo -e "iteration,z3-crash,z3-sat,z3-time,mathsat-crash,mathsat-sat,mathsat-time" >> logs/fuzzes_complete.log
+echo -e "iteration,z3-crash,z3-sat,z3-time,mathsat-crash,mathsat-sat,mathsat-time" >> logs/fuzzes_error.log
+
+TIMEOUT=300 # 5 minutes
 
 # iterate a bunch
-for i in {1..5}
+for i in {1..50000}
 do
   # generate a new formula
   java -classpath src FPFuzzer > out.smt2
@@ -25,16 +27,24 @@ do
   cat out.smt2 >> logs/fuzzes.log
 
   # run the solvers on the newly generated formulas
-  z3SatAndTime="$(command time -p bash -c './solvers/z3/bin/z3 -smt2 out.smt2; echo ,' 2>&1 | xargs)"
-  z3Res=$? # process ran successfully (0) or crashed (anything else)
+  # run z3 to get "sat" or "unsat" with runtime written to file
+  z3Sat="$(command time -p ./solvers/z3/bin/z3 -smt2 -T:$TIMEOUT out.smt2 2>duration.temp)"
+  z3Time="$(cat duration.temp)"
+  rm duration.temp
+
+  # run mathsat5 to get "sat" or "unsat" with runtime written to file
+  # note: mathsat5 doesn't have a timeout option :(
+  mathsat5Sat="$(command time -p ./solvers/mathsat5/bin/mathsat -input=smt2 out.smt2 2>duration.temp)"
+  mathsat5Time="$(cat duration.temp)"
+  rm duration.temp
 
   # if there was an error or an inconsistency, log it in errors
-  if [ $z3Res -ne 0 ]; then
-    echo -e "$i,$z3Res,$z3SatAndTime" >> logs/fuzzes_error.log
+  if ([ "$z3Sat" != "sat" ] && [ "$z3Sat" != "unsat" ]) || ([ "$mathsat5Sat" != "sat" ] && [ "$mathsat53Sat" != "unsat" ]) || [ "$mathsat5Sat" != "$z3Sat" ]; then
+    echo -e "$i,$z3Sat,$z3Time,$mathsat5Sat,$mathsat5Time" | xargs >> logs/fuzzes_error.log
   fi
 
   # log results for each run of the solver
-  echo -e "$i,$z3Res,$z3SatAndTime" >> logs/fuzzes_complete.log
+  echo -e "$i,$z3Sat,$z3Time,$mathsat5Sat,$mathsat5Time" | xargs >> logs/fuzzes_complete.log
 done
 
 # cleanup

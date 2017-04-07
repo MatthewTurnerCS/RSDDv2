@@ -434,7 +434,7 @@ public class FPFuzzer
 	// Rounding mode
 	public enum FPRoundMode {
 		RNE,	// Round nearest ties to even
-		RNA,	// Round nearest ties to away
+		// RNA,	// Round nearest ties to away // not supported by mathsat5
 		RTP,	// Round toward positive
 		RTN,	// Round toward negative
 		RTZ		// Round toward zero

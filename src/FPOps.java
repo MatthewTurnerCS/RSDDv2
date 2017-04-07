@@ -10,9 +10,9 @@ public enum FPOps
 	SUB("fp.sub", 2, true),
 	MUL("fp.mul", 2, true),
 	DIV("fp.div", 2, true),
-	FMA("fp.fma", 3, true),
+	// FMA("fp.fma", 3, true), // not supported by mathsat5
 	SQRT("fp.sqrt", 1, true),
-	REM("fp.rem", 2, false),
+	// REM("fp.rem", 2, false), // not supported by mathsat5
 	ROUNDTOINTEGRAL("fp.roundToIntegral", 1, true),
 	MIN("fp.min", 2, false),
 	MAX("fp.max", 2, false),

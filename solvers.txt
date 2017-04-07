@@ -1,0 +1,4 @@
+boolector: boolector-2.4.1-with-lingeling-bbc -- no float
+cvc4:      cvc4-2017-04-06-x86_64-linux-opt   -- no float
+mathsat5:  mathsat-5.4.0-linux-x86_64 -- doesn't support fp.fma, fp.rem, or RNA
+z3:        z3-4.5.0-x64-ubuntu-14.04
