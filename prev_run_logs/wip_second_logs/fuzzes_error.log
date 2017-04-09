@@ -1,0 +1,43 @@
+results when a solver crashed or had inconsistencies
+
+iteration,z3-crash,z3-sat,z3-time,mathsat-crash,mathsat-sat,mathsat-time
+36,timeout,real 3600.02 user 2821.10 sys 778.63,sat,real 0.08 user 0.07 sys 0.00
+43,timeout,real 3600.00 user 3385.67 sys 214.37,sat,real 0.07 user 0.06 sys 0.00
+56,timeout,real 3600.01 user 2781.44 sys 818.57,sat,real 0.18 user 0.16 sys 0.01
+62,timeout,real 3600.01 user 2852.39 sys 747.68,sat,real 0.82 user 0.73 sys 0.08
+77,timeout,real 3600.01 user 2997.91 sys 602.10,sat,real 0.00 user 0.00 sys 0.00
+80,timeout,real 3600.01 user 2803.61 sys 796.38,sat,real 3.02 user 2.80 sys 0.22
+84,timeout,real 3600.00 user 3408.50 sys 191.65,sat,real 0.00 user 0.00 sys 0.00
+118,timeout,real 3600.01 user 3091.64 sys 508.42,sat,real 0.79 user 0.70 sys 0.08
+125,timeout,real 3600.01 user 2804.85 sys 795.22,sat,real 0.63 user 0.57 sys 0.06
+128,timeout,real 3600.01 user 3518.17 sys 81.87,sat,real 0.50 user 0.44 sys 0.05
+134,timeout,real 3600.01 user 2831.44 sys 768.56,sat,real 0.00 user 0.00 sys 0.00
+138,timeout,real 3600.02 user 3238.31 sys 361.67,sat,real 0.71 user 0.64 sys 0.06
+142,timeout,real 3600.01 user 2798.51 sys 801.49,sat,real 0.16 user 0.13 sys 0.02
+152,timeout,real 3600.01 user 2766.49 sys 833.50,sat,real 0.00 user 0.00 sys 0.00
+166,timeout,real 3600.00 user 3340.58 sys 259.56,sat,real 0.00 user 0.00 sys 0.00
+188,timeout,real 3600.01 user 2774.10 sys 825.93,sat,real 0.19 user 0.17 sys 0.01
+201,,real 3600.00 user 3407.73 sys 192.32,sat,real 0.00 user 0.00 sys 0.00
+208,timeout,real 3600.01 user 2775.56 sys 824.45,sat,real 0.00 user 0.00 sys 0.00
+245,timeout,real 3600.11 user 3565.48 sys 34.71,unsat,real 3.20 user 2.93 sys 0.26
+262,timeout,real 3600.01 user 3093.21 sys 506.81,sat,real 0.00 user 0.00 sys 0.00
+316,timeout,real 3600.05 user 2865.15 sys 734.81,sat,real 0.00 user 0.00 sys 0.00
+337,timeout,real 3600.03 user 2752.36 sys 847.60,sat,real 0.00 user 0.00 sys 0.00
+347,timeout,real 3600.01 user 2708.41 sys 891.41,sat,real 0.02 user 0.00 sys 0.00
+349,,real 3600.02 user 3452.59 sys 147.37,sat,real 0.76 user 0.71 sys 0.04
+396,timeout,real 3600.04 user 2786.15 sys 813.64,sat,real 0.00 user 0.00 sys 0.00
+403,timeout,real 3600.01 user 2793.67 sys 805.72,sat,real 0.00 user 0.00 sys 0.00
+407,timeout,real 3600.04 user 3180.85 sys 418.96,sat,real 0.01 user 0.01 sys 0.00
+432,timeout,real 3600.00 user 3420.95 sys 179.19,sat,real 0.10 user 0.09 sys 0.01
+457,timeout,real 3600.03 user 3299.60 sys 300.52,sat,real 1.91 user 1.74 sys 0.16
+458,timeout,real 3600.01 user 2718.10 sys 881.10,sat,real 0.53 user 0.48 sys 0.04
+471,timeout,real 3600.01 user 2622.50 sys 977.24,sat,real 0.42 user 0.37 sys 0.04
+475,sat,real 1.65 user 1.28 sys 0.36,unsat,real 0.00 user 0.00 sys 0.00
+494,timeout,real 3600.02 user 2942.61 sys 657.51,sat,real 6.58 user 6.05 sys 0.52
+516,timeout,real 3600.01 user 3251.43 sys 348.62,sat,real 1.31 user 1.19 sys 0.11
+530,timeout,real 3600.01 user 2972.40 sys 627.67,sat,real 2.94 user 2.72 sys 0.21
+531,timeout,real 3600.01 user 2632.25 sys 967.78,sat,real 0.00 user 0.00 sys 0.00
+553,timeout,real 3600.01 user 2952.54 sys 647.51,sat,real 0.00 user 0.00 sys 0.00
+560,timeout,real 3600.15 user 2977.49 sys 622.64,sat,real 0.00 user 0.00 sys 0.00
+571,timeout,real 3600.07 user 3089.74 sys 510.34,sat,real 0.00 user 0.00 sys 0.00
+598,timeout,real 3600.00 user 3252.00 sys 348.12,sat,real 0.00 user 0.00 sys 0.00
