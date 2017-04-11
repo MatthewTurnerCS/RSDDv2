@@ -16,10 +16,10 @@ echo -e "iteration,z3-crash,z3-sat,z3-time,mathsat-crash,mathsat-sat,mathsat-tim
 TIMEOUT=3600 # 1 hour
 
 # iterate a bunch
-for i in {1..50000}
+for i in {1..1000}
 do
   # generate a new formula
-  java -classpath src FPFuzzer > out.smt2
+  java -classpath src FPFuzzer -numFuncs 50 -numPreds 10 -numVars 20 -numConsts 20 -numDerivedFloats 50 -numDerivedBools 20 -maxArgs 10 -maxDepth 6 > out.smt2
 
   # log the newly generated thing to be able to easily find should a
   # discrepency between solvers occur
