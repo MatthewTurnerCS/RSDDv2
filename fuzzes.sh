@@ -13,7 +13,7 @@ echo -e "results when a solver crashed or had inconsistencies\n" > logs/fuzzes_e
 echo -e "iteration,z3-crash,z3-sat,z3-time,mathsat-crash,mathsat-sat,mathsat-time" >> logs/fuzzes_complete.log
 echo -e "iteration,z3-crash,z3-sat,z3-time,mathsat-crash,mathsat-sat,mathsat-time" >> logs/fuzzes_error.log
 
-TIMEOUT=3600 # 1 hour
+TIMEOUT=600 # 10 minutes
 
 # iterate a bunch
 for i in {1..1000}
@@ -41,8 +41,7 @@ do
   # if there was an error or an inconsistency, log it in errors
   if ([ "$z3Sat" != "sat" ] && [ "$z3Sat" != "unsat" ]) ||
      ([ "$mathsat5Sat" != "sat" ] && [ "$mathsat5Sat" != "unsat" ]) ||
-     [ "$mathsat5Sat" != "$z3Sat" ] ||
-     [ "$Sat" != "$z3Sat" ] ; then
+     [ "$mathsat5Sat" != "$z3Sat" ]; then
     echo -e "$i,$z3Sat,$z3Time,$mathsat5Sat,$mathsat5Time" | xargs >> logs/fuzzes_error.log
   fi
 
