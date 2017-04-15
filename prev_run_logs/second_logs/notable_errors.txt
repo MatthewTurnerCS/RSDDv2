@@ -1,0 +1,114 @@
+475,sat,real 1.65 user 1.28 sys 0.36,unsat,real 0.00 user 0.00 sys 0.00
+-- iteration 475 --
+(declare-fun f0 (Float32) Float128)
+(declare-fun p0 (Float128 Float16) Bool)
+; GENERATING VARIABLES
+(declare-const ?float2 Float32)
+(declare-const ?float3 Float64)
+; GENERATING CONSTS
+(declare-const ?float4 Float64)
+(assert (= ?float4 (fp #b1 #b00000000001 #b0000000000000000000000000000000000000000000000000000)))
+(declare-const ?float5 Float128)
+(assert (= ?float5 (fp #b1 #b000000000000001 #b0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000)))
+; DERIVE FLOATS
+(declare-const ?float6 Float128)
+(assert (= ?float6 (fp.abs ?float5)))
+(declare-const ?float7 Float128)
+(assert (= ?float7 (fp.sub RTZ ?float6 ((_ to_fp 15 113) RTP ?float2))))
+(declare-const ?float8 Float64)
+(assert (= ?float8 (fp.max ((_ to_fp 11 53) RTZ ?float6) ?float3)))
+(declare-const ?float9 Float64)
+(assert (= ?float9 (fp.max ?float8 ?float4)))
+(declare-const ?float10 Float128)
+(assert (= ?float10 (f0 ((_ to_fp 8 24) RTN ?float4))))
+; DERIVE BOOLS
+(declare-const ?bool11 Bool)
+(assert (= ?bool11 (fp.isNormal ?float2)))
+(declare-const ?bool12 Bool)
+(assert (= ?bool12 (fp.leq ?float5 ?float5)))
+(declare-const ?bool13 Bool)
+(assert (= ?bool13 (p0 ?float6 ((_ to_fp 5 11) RNE ?float6))))
+(declare-const ?bool14 Bool)
+(assert (= ?bool14 (fp.isNegative ?float9)))
+(declare-const ?bool15 Bool)
+(assert (= ?bool15 (p0 ((_ to_fp 15 113) RTZ ?float9) ((_ to_fp 5 11) RTN ?float2))))
+; FINAL ASSERT
+(assert (and (or ?bool11 ?bool13 (or (and ?bool12 ?bool14 ?bool15) (and ?bool12 ?bool15 ?bool13))) ?bool14))
+(check-sat)
+
+--------- Analysis ---------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+1165,sat,real 1.18 user 1.02 sys 0.16,unsat,real 0.00 user 0.00 sys 0.00
+-- iteration 1165 --
+(declare-fun f0 (Float64 Float128 Float64) Float64)
+(declare-fun p0 (Float128 Float128) Bool)
+; GENERATING VARIABLES
+(declare-const ?float2 Float64)
+(declare-const ?float3 Float16)
+; GENERATING CONSTS
+(declare-const ?float4 Float64)
+(assert (= ?float4 (fp #b1 #b00000000001 #b0000000000000000000000000000000000000000000000000000)))
+(declare-const ?float5 Float16)
+(assert (= ?float5 (fp #b0 #b00000 #b0000000000)))
+; DERIVE FLOATS
+(declare-const ?float6 Float64)
+(assert (= ?float6 (fp.div RNE ?float4 ((_ to_fp 11 53) RTP ?float5))))
+(declare-const ?float7 Float16)
+(assert (= ?float7 (fp.max ?float3 ?float5)))
+(declare-const ?float8 Float64)
+(assert (= ?float8 (f0 ?float6 ((_ to_fp 15 113) RTN ?float2) ?float2)))
+(declare-const ?float9 Float16)
+(assert (= ?float9 (fp.max ?float7 ?float3)))
+(declare-const ?float10 Float64)
+(assert (= ?float10 (fp.div RTN ?float6 ?float2)))
+; DERIVE BOOLS
+(declare-const ?bool11 Bool)
+(assert (= ?bool11 (fp.geq ?float3 ?float3)))
+(declare-const ?bool12 Bool)
+(assert (= ?bool12 (fp.isInfinite ?float6)))
+(declare-const ?bool13 Bool)
+(assert (= ?bool13 (fp.isNegative ?float7)))
+(declare-const ?bool14 Bool)
+(assert (= ?bool14 (fp.lt ?float4 ?float10)))
+(declare-const ?bool15 Bool)
+(assert (= ?bool15 (fp.isNegative ?float6)))
+; FINAL ASSERT
+(assert (and ?bool11 ?bool13))
+(check-sat)
+
+--------- Analysis ---------
+func0(Float64, Float128, Float64) Float64
+pred0(Float128, Float128) Bool
+
+var ?float2 Float64 = -1.17549435082228750796873653722E-38
+var ?float3 Float16 = 0.0
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
