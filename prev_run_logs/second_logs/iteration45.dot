@@ -1,0 +1,31 @@
+digraph tree {
+  and1 [label="and"];
+  and2 [label="and"];
+  and3 [label="and"];
+  or1  [label="or"];
+  or2  [label="or"];
+
+  n11a [label="11"];
+  n12a [label="12"];
+  n12b [label="12"];
+  n13a [label="13"];
+  n13b [label="13"];
+  n14a [label="14"];
+  n14b [label="14"];
+  n15a [label="15"];
+  n15b [label="15"];
+
+  and1 -> or1;
+  and1 -> n14a;
+  or1  -> n11a;
+  or1  -> n13a;
+  or1  -> or2;
+  or2  -> and2;
+  or2  -> and3;
+  and2 -> n12a;
+  and2 -> n14b;
+  and2 -> n15a;
+  and3 -> n12b;
+  and3 -> n13b;
+  and3 -> n15b;
+}

@@ -73,3 +73,8 @@
 ; FINAL ASSERT
 (assert (and ?bool11 ?bool13))
 (check-sat)
+
+; distilled problem!
+(declare-const ?float1 Float16)
+(assert (fp.isPositive (fp.max ?float1 (fp #b0 #b00000 #b0000000000))))
+(check-sat)

@@ -1,0 +1,11 @@
+digraph tree {
+  var1  [label="float var"];
+  var2  [label="+0.0"];
+
+  node1 [label="fp.max"];
+  node2 [label="fp.isPositive"];
+
+  var1  -> node1;
+  var2  -> node1;
+  node1 -> node2;
+}
