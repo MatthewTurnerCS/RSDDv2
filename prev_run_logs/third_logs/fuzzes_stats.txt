@@ -1,0 +1,15 @@
+z3-sat                            :	6
+z3-unsat                          :	32
+z3-timeout                        :	91
+z3-total-user-time                :	345387.69
+z3-avg-user-time                  :	2677.42
+mathsat-sat                       :	97
+mathsat-unsat                     :	32
+mathsat-timeout                   :	0
+mathsat-total-user-time           :	33.36
+mathsat-avg-user-time             :	0.26
+z3-mathsat-match                  :	38
+z3-mathsat-no-match               :	91
+z3-mathsat-non-timeout-no-match   :	0
+z3-mathsat-non-timeout-no-matches :	[]
+total-iterations                  :	129

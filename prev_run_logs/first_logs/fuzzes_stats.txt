@@ -1,0 +1,17 @@
+could not convert string to float: expected) ['3734', '(error line 7 column 1: invalid command', " '(' expected) (error line 8 column 11: unknown constant ?float4) (error\n"] 
+
+z3-sat                            :	798
+z3-unsat                          :	265
+z3-timeout                        :	3206
+z3-total-user-time                :	63411.77
+z3-avg-user-time                  :	14.85
+mathsat-sat                       :	928
+mathsat-unsat                     :	269
+mathsat-timeout                   :	3072
+mathsat-total-user-time           :	3765.47
+mathsat-avg-user-time             :	0.88
+z3-mathsat-match                  :	4132
+z3-mathsat-no-match               :	137
+z3-mathsat-non-timeout-no-match   :	0
+z3-mathsat-non-timeout-no-matches :	[]
+total-iterations                  :	4269
